@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Stroke Prediction</title>
+
+```
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+```
+
+</head>
+
+<body>
+
+<div class="container">
+
+```
+<h1>🧠 Brain Stroke Prediction</h1>
+
+<form action="/predict" method="POST">
+
+    <!-- Gender -->
+    <label for="gender">Gender</label>
+
+    <select id="gender" name="gender" required>
+        <option value="" disabled {% if not form %}selected{% endif %}>
+            Select Gender
+        </option>
+
+        <option value="Male"
+            {% if form and form.get('gender') == 'Male' %}selected{% endif %}>
+            Male
+        </option>
+
+        <option value="Female"
+            {% if form and form.get('gender') == 'Female' %}selected{% endif %}>
+            Female
+        </option>
+        <option value="Other"
+    {% if form and form.get('gender') == 'Other' %}selected{% endif %}>
+    Other
+</option>
+    </select>
+
+
+    <!-- Age -->
+    <label>Age</label>
+
+    <input type="number"
+           name="age"
+           value="{{ form.get('age', '') if form else '' }}"
+           min="1"
+           max="120"
+           required>
+
+
+    <!-- Hypertension -->
+    <label>Hypertension</label>
+
+    <select name="hypertension" required>
+        <option value="" disabled
+            {% if not form %}selected{% endif %}>
+            Select
+        </option>
+
+        <option value="1"
+            {% if form and form.get('hypertension') == '1' %}selected{% endif %}>
+            Yes
+        </option>
+
+        <option value="0"
+            {% if form and form.get('hypertension') == '0' %}selected{% endif %}>
+            No
+        </option>
+    </select>
+
+
+    <!-- Heart Disease -->
+    <label>Heart Disease</label>
+
+    <select name="heart_disease" required>
+        <option value="" disabled
+            {% if not form %}selected{% endif %}>
+            Select
+        </option>
+
+        <option value="1"
+            {% if form and form.get('heart_disease') == '1' %}selected{% endif %}>
+            Yes
+        </option>
+
+        <option value="0"
+            {% if form and form.get('heart_disease') == '0' %}selected{% endif %}>
+            No
+        </option>
+    </select>
+
+
+    <!-- Ever Married -->
+    <label>Ever Married</label>
+
+    <select name="ever_married" required>
+        <option value="" disabled
+            {% if not form %}selected{% endif %}>
+            Select
+        </option>
+
+        <option value="1"
+            {% if form and form.get('ever_married') == '1' %}selected{% endif %}>
+            Yes
+        </option>
+
+        <option value="0"
+            {% if form and form.get('ever_married') == '0' %}selected{% endif %}>
+            No
+        </option>
+    </select>
+
+
+    <!-- Work Type -->
+    <label>Work Type</label>
+
+    <select name="work_type" required>
+        <option value="" disabled
+            {% if not form %}selected{% endif %}>
+            Select Work Type
+        </option>
+
+        <option value="0"
+            {% if form and form.get('work_type') == '0' %}selected{% endif %}>
+            Government Job
+        </option>
+
+        <option value="1"
+            {% if form and form.get('work_type') == '1' %}selected{% endif %}>
+            Never Worked
+        </option>
+
+        <option value="2"
+            {% if form and form.get('work_type') == '2' %}selected{% endif %}>
+            Private
+        </option>
+
+        <option value="3"
+            {% if form and form.get('work_type') == '3' %}selected{% endif %}>
+            Self-employed
+        </option>
+
+        <option value="4"
+            {% if form and form.get('work_type') == '4' %}selected{% endif %}>
+            Children
+        </option>
+    </select>
+
+
+    <!-- Residence -->
+    <label>Residence Type</label>
+
+    <select name="residence_type" required>
+        <option value="" disabled
+            {% if not form %}selected{% endif %}>
+            Select Residence
+        </option>
+
+        <option value="1"
+            {% if form and form.get('residence_type') == '1' %}selected{% endif %}>
+            Urban
+        </option>
+
+        <option value="0"
+            {% if form and form.get('residence_type') == '0' %}selected{% endif %}>
+            Rural
+        </option>
+    </select>
+
+
+    <!-- Average Glucose -->
+    <label>Average Glucose Level (mg/dL)</label>
+
+    <input type="number"
+           name="avg_glucose_level"
+           step="0.01"
+           min="1"
+           max="500"
+           value="{{ form.get('avg_glucose_level', '') if form else '' }}"
+           placeholder="Example: 95"
+           required>
+
+    <div class="info-box">
+        <strong>🩸 Reference:</strong><br>
+        &lt; 100 mg/dL → Normal fasting range<br>
+        100–125 mg/dL → Prediabetes range<br>
+        ≥ 126 mg/dL → Diabetes range
+    </div>
+
+
+    <!-- BMI -->
+    <label>BMI</label>
+
+    <input type="number"
+           name="bmi"
+           step="0.01"
+           min="1"
+           max="100"
+           value="{{ form.get('bmi', '') if form else '' }}"
+           placeholder="Example: 22.5"
+           required>
+
+    <div class="info-box">
+        <strong>⚖️ BMI Reference:</strong><br>
+        &lt; 18.5 → Underweight<br>
+        18.5–24.9 → Normal<br>
+        25–29.9 → Overweight<br>
+        ≥ 30 → Obesity
+    </div>
+
+
+    <!-- Smoking -->
+    <label>Smoking Status</label>
+    <select name="smoking_status" required>
+
+    <option value="" disabled selected>
+        Select Smoking Status
+    </option>
+
+    <option value="0">
+        Unknown
+    </option>
+
+    <option value="1">
+        Formerly Smoked
+    </option>
+
+    <option value="2">
+        Never Smoked
+    </option>
+
+    <option value="3">
+        Smokes
+    </option>
+
+</select>
+
+        
+    
+        
+        
+        
+
+    <!-- Predict Button -->
+    <button type="submit">
+        🔮 Predict Stroke Risk
+    </button>
+
+</form>
+
+
+<!-- Result -->
+{% if prediction %}
+
+    <div class="result">
+
+        <h2>{{ prediction }}</h2>
+
+        {% if probability is defined %}
+            <p>
+                Stroke Probability:
+                <strong>{{ probability }}%</strong>
+            </p>
+        {% endif %}
+
+    </div>
+
+{% endif %}
+```
+
+</div>
+
+</body>
+</html>
